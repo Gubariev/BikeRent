@@ -1,8 +1,101 @@
-﻿@{
+﻿@model BikeRent.ViewModels.BikesViewModel
+@{
     ViewBag.Title = "Home Page";
 }
 
 <div class="jumbotron">
-    <h1>Awesome Bike Rental</h1>
+    <h2>Awesome Bike Rental</h2>
     <p class="lead">Create new rent</p>
 </div>
+
+@using (Html.BeginForm("AddBike", "Home"))
+{
+    <div>
+        @Html.LabelFor(m => m.Bike.Name)
+        @Html.TextBoxFor(m => m.Bike.Name, new {@class = "form-control"})
+        @Html.ValidationMessageFor(m=>m.Bike.Name)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Bike.BikeType)
+        @Html.DropDownListFor(m => m.Bike.BikeTypeId, new SelectList(Model.BikeTypes, "Id", "Name"), "Select Type", new { @class = "form-control " })
+        @Html.ValidationMessageFor(m => m.Bike.BikeType)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Bike.RentCost)
+        @Html.TextBoxFor(m => m.Bike.RentCost, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Bike.RentCost)
+    </div>
+    @Html.HiddenFor(m=>m.Bike.Id)
+    <br/>
+    <button type="submit" class="btn btn-primary">Submit rent</button>
+}
+<h2>Your rent</h2>
+@foreach (var bike in Model.Bikes)
+{
+    <p>@bike.Name / @bike.BikeType.Name / @bike.RentCost</p>
+}
+
+
+<table id="bikes" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>Bike Name</th>
+        <th>Bike Type</th>
+        <th>Cost</th>
+        <th>Cancel rent</th>
+    </tr>
+    </thead>
+    <tbody>
+        
+
+    </tbody>
+</table>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#bikes").DataTable({
+                ajax: {
+                    url: "/api/DataLoad",
+                    dataSrc: ""
+                },
+                columns: [
+
+                    {
+                        data: "name"
+                    },
+                    {
+                        data: "name"
+                    },
+                    {
+                        data: "rentCost"
+                    },
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<button class='btn-link js-update' data-bike-id=" + data + ">" + "Cancel rent" + "</button>";
+                        }
+                    }
+                ]
+            });
+            $("#bikes").on("click", ".js-update", function () {
+                var button = $(this);
+                bootbox.confirm("Are you sure you want to cancel rent?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/dataload/" + button.attr("data-bike-id"),
+                            method: "PUT",
+                            success: function () {
+
+                                button.parents("tr").remove();
+                                table.ajax.reload();
+                            }
+                        })
+                    }
+                });
+
+            });
+        })
+    </script>
+}
+
