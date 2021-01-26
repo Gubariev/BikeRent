@@ -66,7 +66,7 @@
         $(document).ready(function() {
             $("#bikes").DataTable({
                 ajax: {
-                    url: "/api/DataLoad/yourrents",
+                    url: "/api/DataLoad",
                     dataSrc: ""
                 },
                 columns: [
@@ -95,7 +95,7 @@
                         function(result) {
                             if (result) {
                                 $.ajax({
-                                    url: "/api/dataload/cancelrent" + button.attr("data-bike-id"),
+                                    url: "/api/dataload/" + button.attr("data-bike-id"),
                                     method: "PUT",
                                     success: function() {
                                         location.reload();
@@ -108,7 +108,7 @@
 
             $("#bikes-available").DataTable({
                 ajax: {
-                    url: "/api/dataload/availablerent",
+                    url: "/api/availablerent",
                     dataSrc: ""
                 },
                 columns: [
@@ -144,7 +144,7 @@
                         function(result) {
                             if (result) {
                                 $.ajax({
-                                    url: "/api/dataload/rentbike" + button.attr("data-bike-id"),
+                                    url: "/api/availablerent/" + button.attr("data-bike-id"),
                                     method: "PUT",
                                     success: function() {
                                         location.reload();
@@ -162,7 +162,7 @@
                         function (result) {
                             if (result) {
                                 $.ajax({
-                                    url: "/api/dataload/" + button.attr("data-bike-id"),
+                                    url: "/api/availablerent/" + button.attr("data-bike-id"),
                                     method: "DELETE",
                                     success: function () {
                                         location.reload();
