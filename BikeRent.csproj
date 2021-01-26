@@ -156,6 +156,10 @@
     <Compile Include="Migrations\202101251007098_AddAnnotations.designer.cs">
       <DependentUpon>202101251007098_AddAnnotations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101260906241_AddingAnnotations.cs" />
+    <Compile Include="Migrations\202101260906241_AddingAnnotations.designer.cs">
+      <DependentUpon>202101260906241_AddingAnnotations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Bike.cs" />
@@ -397,6 +401,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101251007098_AddAnnotations.resx">
       <DependentUpon>202101251007098_AddAnnotations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101260906241_AddingAnnotations.resx">
+      <DependentUpon>202101260906241_AddingAnnotations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

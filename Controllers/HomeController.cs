@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 using System.Web.Mvc;
 using BikeRent.Models;
 using BikeRent.ViewModels;
@@ -18,7 +19,7 @@ namespace BikeRent.Controllers
         }
         public ActionResult Index()
         {
-            var viewModel = new BikesViewModel
+            var viewModel = new BikesViewModel()
             {
                 BikeTypes = _context.BikeTypes.ToList(),
                 Bikes = _context.Bikes.ToList()
@@ -43,6 +44,18 @@ namespace BikeRent.Controllers
 
         public ActionResult AddBike(BikesViewModel viewModel)
         {
+            /*
+            if (!ModelState.IsValid)
+            {
+                var newViewModel = new BikesViewModel
+                {
+                    BikeTypes = _context.BikeTypes.ToList(),
+                    Bikes = _context.Bikes.ToList()
+                };
+                return View("Index", newViewModel);
+
+            }
+            */
             var newBike = new Bike
             {
                 Name = viewModel.Bike.Name,
@@ -53,6 +66,7 @@ namespace BikeRent.Controllers
             _context.Bikes.Add(newBike);
             _context.SaveChanges();
             return RedirectToAction("Index");
+            
         }
     }
 }
