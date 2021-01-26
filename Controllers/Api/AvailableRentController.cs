@@ -23,15 +23,12 @@ namespace BikeRent.Controllers.Api
         [HttpGet]
         public IHttpActionResult GetAvailableBikes()
         {
-            var bikes = _context.Bikes.Include(b => b.BikeType).ToList().Select(Mapper.Map<Bike, BikeDto>);
-            var bikesDto = new List<BikeDto>();
-            foreach (var bike in bikes)
-            {
-                if (bike.RentStatus == true)
-                {
-                    bikesDto.Add(bike);
-                }
-            }
+            var bikesDto = _context.Bikes
+                .Include(b => b.BikeType)
+                .ToList()
+                .Select(Mapper.Map<Bike, BikeDto>)
+                .Where(b=>b.RentStatus==true);
+            
             return Ok(bikesDto);
         }
 

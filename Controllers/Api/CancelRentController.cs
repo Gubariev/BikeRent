@@ -13,11 +13,11 @@ using BikeRent.Dto;
 
 namespace BikeRent.Controllers.Api
 {
-    public class DataLoadController : ApiController
+    public class CancelRentController : ApiController
     {
         private ApplicationDbContext _context;
 
-        public DataLoadController()
+        public CancelRentController()
         {
             _context = new ApplicationDbContext();
         }
@@ -25,15 +25,11 @@ namespace BikeRent.Controllers.Api
         [HttpGet]
         public IHttpActionResult GetBikes()
         {
-            var bikes = _context.Bikes.Include(b => b.BikeType).ToList().Select(Mapper.Map<Bike, BikeDto>);
-            var bikesDto = new List<BikeDto>();
-            foreach (var bike in bikes)
-            {
-                if (bike.RentStatus==false)
-                {
-                    bikesDto.Add(bike);
-                }
-            }
+            var bikesDto = _context.Bikes
+                .Include(b => b.BikeType)
+                .ToList()
+                .Select(Mapper.Map<Bike, BikeDto>)
+                .Where(b=>b.RentStatus==false);
             return Ok(bikesDto);
         }
 

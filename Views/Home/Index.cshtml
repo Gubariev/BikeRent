@@ -3,10 +3,7 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h2>Awesome Bike Rental</h2>
-    <p class="lead">Create new rent</p>
-</div>
+<h2>Create new rent</h2>
 <div class="addingForm">
     @using (Html.BeginForm("AddBike", "Home"))
     {
@@ -66,7 +63,7 @@
         $(document).ready(function() {
             $("#bikes").DataTable({
                 ajax: {
-                    url: "/api/DataLoad",
+                    url: "/api/CancelRent",
                     dataSrc: ""
                 },
                 columns: [
@@ -95,7 +92,7 @@
                         function(result) {
                             if (result) {
                                 $.ajax({
-                                    url: "/api/dataload/" + button.attr("data-bike-id"),
+                                    url: "/api/CancelRent/" + button.attr("data-bike-id"),
                                     method: "PUT",
                                     success: function() {
                                         location.reload();
